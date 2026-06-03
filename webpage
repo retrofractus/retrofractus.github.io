@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vale Research — Goal-oriented research for animal welfare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f4f1e8;
+    --cream-deep: #ebe5d4;
+    --paper: #faf7ee;
+    --ink: #1a1a17;
+    --ink-soft: #2d2d28;
+    --olive: #3d4a2a;
+    --olive-deep: #2a3320;
+    --sage: #9bb088;
+    --sage-soft: #c5d3b5;
+    --rule: #d8d1bc;
+    --muted: #6b6655;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.05 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+  }
+
+  /* Topbar */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: var(--olive);
+    z-index: 50;
+  }
+
+  /* Brand mark */
+  .brand {
+    position: absolute;
+    top: calc(48px + 2rem);
+    left: 2.5rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand svg { width: 32px; height: 32px; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 10rem 2.5rem 5rem;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .hero-curves {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--olive);
+    margin-bottom: 2rem;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--olive);
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .hero h1 .accent { color: var(--olive); }
+
+  .hero p.lede {
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 38rem;
+  }
+
+  /* Hero sidebar - fundraising callout */
+  .hero-aside {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 2.25rem;
+    border-radius: 2px;
+    box-shadow: 0 30px 80px -40px rgba(45, 45, 40, 0.25);
+  }
+  .hero-aside::before {
+    content: '';
+    position: absolute;
+    top: -1px; right: -1px;
+    width: 60px;
+    height: 60px;
+    background: var(--olive);
+    z-index: -1;
+    transform: translate(8px, -8px);
+  }
+  .aside-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--sage);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .aside-headline {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.65rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .aside-body {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 1.75rem;
+  }
+  .aside-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .aside-cta:hover {
+    background: var(--olive-deep);
+    transform: translateY(-1px);
+  }
+  .aside-cta .arrow { transition: transform 0.25s; }
+  .aside-cta:hover .arrow { transform: translateX(3px); }
+
+  /* MISSION */
+  .mission {
+    position: relative;
+    padding: 7rem 2.5rem;
+    z-index: 2;
+    border-top: 1px solid var(--rule);
+  }
+  .mission-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+  }
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--olive);
+  }
+  .section-label .num {
+    font-family: 'JetBrains Mono', monospace;
+    margin-right: 0.5rem;
+    color: var(--muted);
+  }
+  .mission-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+  }
+  .mission-text strong {
+    font-weight: 500;
+    color: var(--olive-deep);
+  }
+
+  /* PROGRAMS */
+  .programs {
+    position: relative;
+    padding: 6rem 2.5rem 8rem;
+    z-index: 2;
+    background: var(--cream-deep);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  .section-head { margin-bottom: 3rem; }
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 22ch;
+    margin-top: 0.75rem;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .section-head h2 .accent { color: var(--olive); }
+
+  /* Featured program */
+  .featured-program {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--olive);
+    padding: 2.5rem;
+    border-radius: 2px;
+    margin-bottom: 4.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+  .featured-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--olive);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .featured-tag::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--olive);
+    border-radius: 50%;
+  }
+  .featured-program h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .featured-program p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.55;
+    max-width: 60ch;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.95rem 1.5rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .btn:hover {
+    background: var(--olive-deep);
+    transform: translateY(-1px);
+  }
+  .btn .arrow { transition: transform 0.25s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  .subhead {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--ink-soft);
+    margin-bottom: 2.5rem;
+    max-width: 50ch;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+  }
+
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .program-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 2rem;
+    border-radius: 2px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+  .program-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--olive);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .program-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 50px -30px rgba(45, 45, 40, 0.3);
+  }
+  .program-card:hover::before { transform: scaleX(1); }
+
+  .program-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+  }
+  .program-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.35rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .program-card p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+
+  /* APPROACH */
+  .approach {
+    padding: 8rem 2.5rem;
+    background: var(--olive-deep);
+    color: var(--cream);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+  }
+  .approach::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 0.9 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .approach-content { position: relative; z-index: 1; }
+  .approach .section-label { color: var(--sage); }
+  .approach .section-label .num { color: var(--sage-soft); opacity: 0.6; }
+
+  .approach-head {
+    margin-bottom: 5rem;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .approach-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-top: 0.75rem;
+    max-width: 18ch;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+  }
+  .approach-head h2 .accent { color: var(--sage); }
+
+  .principles {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(155, 176, 136, 0.25);
+  }
+  .principle {
+    padding: 2.5rem 2rem 2.5rem 0;
+    border-bottom: 1px solid rgba(155, 176, 136, 0.25);
+    position: relative;
+  }
+  .principle:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 2.5rem;
+    bottom: 2.5rem;
+    width: 1px;
+    background: rgba(155, 176, 136, 0.2);
+  }
+  .principle-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--sage);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+  .principle h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: var(--cream);
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .principle p {
+    font-size: 0.95rem;
+    color: var(--sage-soft);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 9rem 2.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .cta-inner { max-width: 800px; margin: 0 auto; }
+  .cta h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin: 1.5rem 0 2rem;
+    font-variation-settings: "SOFT" 50, "WONK" 1;
+  }
+  .cta p {
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 38rem;
+    margin: 0 auto 3rem;
+    line-height: 1.55;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 3rem 2.5rem 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+  .footer-brand svg { width: 26px; height: 26px; }
+  .footer-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .footer-meta a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-meta a:hover { color: var(--olive); }
+  .footer-meta .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+
+  /* Animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .topbar { height: 40px; }
+    .brand { top: calc(40px + 1.25rem); left: 1.5rem; }
+    .hero {
+      padding: 7rem 1.5rem 3rem;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .mission, .programs, .approach, .cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .mission { padding: 5rem 1.5rem; }
+    .mission-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .programs-grid { grid-template-columns: 1fr; }
+    .featured-program { grid-template-columns: 1fr; padding: 2rem; }
+    .principles { grid-template-columns: 1fr; }
+    .principle:not(:last-child)::after { display: none; }
+    .approach { padding: 5rem 1.5rem; }
+    .cta { padding: 6rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-curves" viewBox="0 0 1600 900" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="curve1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#9bb088" stop-opacity="0.2"/>
+        <stop offset="50%" stop-color="#9bb088" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#9bb088" stop-opacity="0.1"/>
+      </linearGradient>
+      <linearGradient id="curve2" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#3d4a2a" stop-opacity="0.15"/>
+        <stop offset="50%" stop-color="#3d4a2a" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#3d4a2a" stop-opacity="0.1"/>
+      </linearGradient>
+    </defs>
+    <path d="M-100,400 Q 400,200 800,450 T 1700,420" stroke="url(#curve1)" stroke-width="1.5" fill="none"/>
+    <path d="M-100,480 Q 400,280 800,500 T 1700,470" stroke="url(#curve2)" stroke-width="1.5" fill="none"/>
+    <path d="M-100,540 Q 400,340 800,560 T 1700,530" stroke="url(#curve1)" stroke-width="1.5" fill="none"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="eyebrow fade-up delay-1">A nonprofit research organization</div>
+    <h1 class="fade-up delay-2">Focused research,<br/><span class="accent">measurable</span> welfare gains.</h1>
+    <p class="lede fade-up delay-3">
+      Vale Research runs time-bound, goal-oriented programs that direct talent toward
+      the highest-leverage scientific problems blocking improvements in animal welfare. We fund cohorts,
+      set milestones, and get results.
+    </p>
+  </div>
+
+  <aside class="hero-aside fade-up delay-4">
+    <div class="aside-label">
+      <span class="live-dot"></span>
+      <span>Pre-launch</span>
+    </div>
+    <div class="aside-headline">Vale is currently fundraising for launch.</div>
+    <p class="aside-body">
+      Get in touch if you'd like to learn more.
+    </p>
+    <a href="mailto:mal@valeresearch.org" class="aside-cta">
+      Get in touch <span class="arrow">→</span>
+    </a>
+  </aside>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="mission-grid">
+    <div>
+      <div class="section-label"><span class="num">01</span>Mission</div>
+    </div>
+    <div class="mission-text">
+      Most of the largest sources of animal suffering remain
+      <strong>under-researched relative to their scale.</strong> Vale Research
+      exists to close that gap — building tight, well-resourced programs that
+      pair domain experts with new researchers, set clear deliverables, and
+      conclude on a defined timeline.
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label"><span class="num">02</span>Potential Programs</div>
+      <h2>Designed, scoped, and ready to run.</h2>
+    </div>
+
+    <!-- Featured / completed -->
+    <div class="featured-program">
+      <div>
+        <div class="featured-tag">Design complete</div>
+        <h3>Rodent Control Cohort Research Program</h3>
+        <p>
+          We've completed the design of a rodent control CRP. The full program
+          design is available for review.
+        </p>
+      </div>
+      <a href="#" class="btn">
+        Read the program design <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Subhead for additional areas -->
+    <p class="subhead">
+      With additional funding, we could explore other high-priority areas like:
+    </p>
+
+    <div class="programs-grid">
+
+      <article class="program-card">
+        <div class="program-meta">Track / 01</div>
+        <h3>Welfare metrics for wild animals</h3>
+        <p>
+          Developing welfare indicators that can be used in the wild, where
+          conventional captive-animal methods break down.
+        </p>
+      </article>
+
+      <article class="program-card">
+        <div class="program-meta">Track / 02</div>
+        <h3>Vaccinating wildlife at scale</h3>
+        <p>
+          Investigating the operational and biological pathways to delivering
+          vaccines to wild animal populations at meaningful scale.
+        </p>
+      </article>
+
+      <article class="program-card">
+        <div class="program-meta">Track / 03</div>
+        <h3>Estimating wild insect populations</h3>
+        <p>
+          Developing technology that can reliably estimate insect population
+          sizes in the wild — a prerequisite for almost any quantitative work
+          on insect welfare.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach">
+  <div class="approach-content">
+    <div class="approach-head">
+      <div class="section-label"><span class="num">03</span>How we work</div>
+      <h2>Research with <span class="accent">deadlines.</span></h2>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-num">/ 01</div>
+        <h3>Scoped, not open-ended</h3>
+        <p>
+          Every program starts with a written specification: what counts as
+          success, what gets published, and when. No drift, no perpetual
+          investigations.
+        </p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">/ 02</div>
+        <h3>Mentorship-dense</h3>
+        <p>
+          Each cohort pairs early-career researchers with senior advisors from
+          academia and industry. We measure mentor time in hours per fellow per
+          week, not titles.
+        </p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">/ 03</div>
+        <h3>Publish or retract</h3>
+        <p>
+          Findings — including null and inconvenient results — are released on
+          schedule. We commit to the deliverable before the data comes in.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <div class="section-label" style="justify-content: center; display: flex;"><span class="num">04</span>Get involved</div>
+    <h2>Help us launch.</h2>
+    <p>
+      We're talking with funders, prospective advisors, and field partners
+      ahead of launch. If any of those describe you, we'd like to hear from you.
+    </p>
+    <a href="mailto:mal@valeresearch.org" class="btn">
+      Get in touch <span class="arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg viewBox="0 0 60 60" fill="none">
+        <path d="M5 20 Q 20 8, 30 18 T 55 20" stroke="#3d4a2a" stroke-width="2" fill="none"/>
+        <path d="M5 28 Q 20 16, 30 26 T 55 28" stroke="#9bb088" stroke-width="2" fill="none"/>
+        <path d="M5 36 Q 20 24, 30 34 T 55 36" stroke="#3d4a2a" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <div class="footer-meta">
+      <a href="mailto:mal@valeresearch.org">mal@valeresearch.org</a>
+      <span class="mono">© 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
