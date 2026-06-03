@@ -494,6 +494,41 @@
     color: var(--sage-soft);
     line-height: 1.6;
   }
+/* Approach — why CRPs explanatory block */
+  .approach-why {
+    max-width: 1280px;
+    margin: 5rem auto 0;
+    padding-top: 3.5rem;
+    border-top: 1px solid rgba(155, 176, 136, 0.25);
+  }
+  .approach-why h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 1.25rem;
+    font-variation-settings: "SOFT" 30, "WONK" 1;
+  }
+  .approach-why p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--sage-soft);
+    max-width: 65ch;
+  }
+  .approach-why a {
+    color: var(--cream);
+    text-decoration: underline;
+    text-decoration-color: var(--sage);
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .approach-why a:hover { color: var(--sage); }
+
+  @media (max-width: 900px) {
+    .approach-why { margin-top: 3rem; padding-top: 2.5rem; }
+  }
 
   /* CTA */
   .cta {
@@ -628,9 +663,12 @@
     <div class="eyebrow fade-up delay-1">A nonprofit research organization</div>
     <h1 class="fade-up delay-2">Focused research,<br/><span class="accent">measurable</span> welfare gains.</h1>
     <p class="lede fade-up delay-3">
-      Vale Research runs time-bound, goal-oriented programs that direct talent toward
-      the highest-leverage scientific problems blocking improvements in animal welfare. We fund cohorts,
-      set milestones, and get results.
+      Vale Research conducts time-bound, coordinated research programs to close the gap between science 
+      and animal interventions. We take inspiration from organizations like ARIA in the UK or the ARPAs i
+      n the US – institutions with strong reputations and histories of shepherding research across the valley 
+      of death. Using their model, Vale will pursue unlock bottlenecks that prevent innovation, and translate 
+      those scientific innovations into impactful interventions for animals. 
+
     </p>
   </div>
 
@@ -658,9 +696,8 @@
     <div class="mission-text">
       Most of the largest sources of animal suffering remain
       <strong>under-researched relative to their scale.</strong> Vale Research
-      exists to close that gap — building tight, well-resourced programs that
-      pair domain experts with new researchers, set clear deliverables, and
-      conclude on a defined timeline.
+      exists to close that gap — building fast, coordinated scientific programs that
+      pair domain experts with new researchers to solve problems that would otherwise get ignored.
     </div>
   </div>
 </section>
@@ -683,8 +720,9 @@
           design is available for review.
         </p>
       </div>
-      <a href="#" class="btn">
+      <a href="https://docs.google.com/document/d/1vb8otUrNni9dhhaaE6PuWWtwr2AH8kQvolpR8cMiZIQ/edit?usp=sharing" class="btn">
         Read the program design <span class="arrow">→</span>
+        
       </a>
     </div>
 
@@ -738,41 +776,64 @@
     <div class="principles">
       <div class="principle">
         <div class="principle-num">/ 01</div>
-        <h3>Scoped, not open-ended</h3>
+        <h3>A commitment to cost effectiveness</h3>
         <p>
-          Every program starts with a written specification: what counts as
-          success, what gets published, and when. No drift, no perpetual
-          investigations.
+          Every program starts with a scoping phase to ensure that we only pursue the most valuable programs --
+          those that meet a high bar for the degree of animal benefit we think we can get per dollar. The bar remains
+          relevant throughout the program: programs can be terminated or redirected if the impact case falls below our bar at any point.
         </p>
       </div>
       <div class="principle">
         <div class="principle-num">/ 02</div>
-        <h3>Mentorship-dense</h3>
+        <h3>Active program management</h3>
         <p>
-          Each cohort pairs early-career researchers with senior advisors from
-          academia and industry. We measure mentor time in hours per fellow per
-          week, not titles.
+          Rather than awarding grants and waiting for results, our program managers define
+          the problem, recruit and coordinate the researchers working on it, set milestones, 
+          and reallocate resources as they learn what works. 
         </p>
       </div>
       <div class="principle">
         <div class="principle-num">/ 03</div>
-        <h3>Publish or retract</h3>
+        <h3>Translation over discovery</h3>
         <p>
-          Findings — including null and inconvenient results — are released on
-          schedule. We commit to the deliverable before the data comes in.
+          We focus on the step between a scientific finding and a field-ready intervention.
+          Programs are time-bound and designed in collaboration with an implementation partner to ensure 
+          the translation step actually happens, rather than stalling between disciplines or funders.
         </p>
       </div>
     </div>
   </div>
 </section>
 
+<div class="approach-why">
+  <h3>Why coordinated research programs?</h3>
+  <p>
+    Coordinated research programs have a strong track record in fields such as defense, energy,
+    and biomedicine, where focused, actively managed programs have moved technologies from the lab
+    to real-world use that open-ended grant funding left stranded.
+    <!-- TODO: 2–3 sentences on why the model transfers to animal welfare science -->
+    Many approaches to improving animal welfare are blocked by research barriers. While some
+    of these are gaps that can be solved by commercial R&D, and others require more fundamental
+    research to make progress, many fit the coordinated research profile. These tend to be technologies (like rodent fertility control) 
+    that haven't gained commercial feasibility or infrastructure (like insect population modeling) that blocks entire lines
+    of inquiry. In both cases, the path to success is often unclear, and the issues are often highly interdisciplinar. As a result, 
+    intensive program management and multiple research pathways pursued in tandem -- the hallmarks of coordinated research programs --
+    are the best fit. Vale pursues the many problems that fit this profile, ensuring that we're targeting the work that our approach 
+    serves best.
+    
+    For more, see
+    <a href="https://atlasofinnovation.org/library/coordinated-research-programs">the Atlas of Innovation entry on coordinated research program</a>
+    for a short overview, and <a href="https://blog.benjaminreinhardt.com/wddw"> Ben Reinhardt's "Why Does DARPA Work"</a> for 
+    a deeper dive into the value of these programs.
+  </p>
+</div>
 <!-- CTA -->
 <section class="cta">
   <div class="cta-inner">
     <div class="section-label" style="justify-content: center; display: flex;"><span class="num">04</span>Get involved</div>
     <h2>Help us launch.</h2>
     <p>
-      We're talking with funders, prospective advisors, and field partners
+      We're talking with funders, prospective program managers, and potential implementation partners
       ahead of launch. If any of those describe you, we'd like to hear from you.
     </p>
     <a href="mailto:mal@valeresearch.org" class="btn">
